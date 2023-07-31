@@ -34,8 +34,31 @@ def bill(bill_info):
     return " ".join(card_info)
 
 
+def print_descroption(five_executed):
+    print_descroptions = ""
+    for operation in five_executed:
+        date = operation["date"]
+        date_operation = date[0:10]
+        my_date = date_operation.split("-")
+        correct_date = ".".join(reversed(my_date))
+        description = operation["description"]
 
+        card_bill = ""
+        line_bill = ""
+        if "from" in operation:
+            card_bill += operation["from"]
+            line_bill += bill(card_bill)
+        bill_to = bill(operation["to"])
 
+        amount = operation["operationAmount"]["amount"]
+        currency_name = operation["operationAmount"]["currency"]["name"]
+        print_descroptions += f"""
+{correct_date} {description}
+{line_bill} -> {bill_to}
+{amount} {currency_name}
+"""
+
+    return print_descroptions
 
 
 
